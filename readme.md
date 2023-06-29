@@ -37,7 +37,7 @@
     - 마지막으로, 위의 맵을 잘게 잘라 실시간 포지셔닝에 사용할 수 있습니다.
     - 이 책에 나오는 대부분의 구현은 유사한 알고리즘 라이브러리보다 훨씬 간단합니다. 복잡한 인터페이스를 다루지 않고도 작동 방식을 빠르게 이해할 수 있습니다.
     - 이 책에서는 매우 편리한 동시 프로그래밍을 사용합니다. 이 책의 구현이 기존 알고리즘보다 더 효율적인 경우가 많다는 것을 알게 될 것입니다. 물론 이는 부분적으로 역사적인 이유 때문이기도 합니다.
-    - 책의 각 장에는 다음과 같은 역동적인 프레젠테이션이 함께 제공됩니다:
+    - 책의 각 장에는 다음과 같은 동적 데모가 함께 제공됩니다:
 
 ![](./doc/lio_demo.gif)
 ![](./doc/2dmapping_demo.gif)
@@ -60,7 +60,7 @@
     - UTBM(3D 레이저, 도로 장면)- 기타 기본 제공 데이터
     - 3,4장 텍스트 형식의 IMU, RTK 데이터 사용
     - 7장에서는 EPFL 데이터의 일부를 정렬 포인트 클라우드 소스로 사용합니다.
-    -  위의 데이터를 . /데이터셋/sad/ 디렉터리에 다운로드해야 많은 기본 매개변수가 제대로 작동합니다. 그렇지 않은 경우 이러한 파일 경로를 수동으로 지정할 수도 있습니다. 하드 드라이브의 용량이 부족한 경우 여기에서 다른 하드 드라이브의 디렉터리를 소프트 링크할 수 있습니다.
+    -  위의 데이터를 . /dataset/sad/ 디렉터리에 다운로드해야 많은 기본 매개변수가 제대로 작동합니다. 그렇지 않은 경우 이러한 파일 경로를 수동으로 지정할 수도 있습니다. 하드 드라이브의 용량이 부족한 경우 여기에서 다른 하드 드라이브의 디렉터리를 소프트 링크할 수 있습니다.
 
 ##컴파일
 - 이 책에서 권장하는 빌드 환경은 Ubuntu 20.04입니다. 이전 버전의 Ubuntu는 주로 C++17 표준인 gcc 컴파일러에 맞게 조정해야 합니다. 최신 우분투를 사용하려면 해당 ROS 버전을 직접 설치해야 합니다.
@@ -70,9 +70,9 @@
     ```bash
     sudo apt install -y ros-noetic-pcl-ros ros-noetic-velodyne-msgs libopencv-dev libgoogle-glog-dev libeigen3-dev libsuitesparse-dev libpcl-dev libyaml-cpp-dev libbtbb-dev libgmock-dev
     ```
-    - 판골린: thirdparty/pangolin.zip 또는 https://github.com/stevenlovegrove/Pangolin 을 컴파일하여 설치합니다.
-    - 타사/G2O 컴파일 또는 직접 컴파일 및 설치 https://github.com/RainerKuemmerle/g2o 
-    - 通过cmake, make安装本repo下的`thirdparty/g2o`库
+    - Pangolin: thirdparty/pangolin.zip 또는 https://github.com/stevenlovegrove/Pangolin 을 컴파일하여 설치합니다.
+    - thirdparty/g2o를 컴파일하거나 직접 컴파일 및 설치 https://github.com/RainerKuemmerle/g2o
+    - cmake, make를 통해 이 저장소 아래에 thirdparty/g2o라이브러리를 설치합니다.
 - 그런 다음 일반적인 cmake, make 메서드를 사용하여 책의 모든 내용을 컴파일할 수 있습니다. 예를 들면
 ```bash
 mkdir build
@@ -82,11 +82,11 @@ make -j8
 ```
 - 컴파일된 챕터의 실행 파일은 `bin` 디렉터리에 있습니다.
 
-### 适配Ubuntu18.04
+### Ubuntu18.04에 적용
 
 우분투 18.04에서 컴파일하고 실행하려면 gcc-9을 설치하고 해당 버전의 TBB를 사용해야 합니다. 또는 도커 환경에서 사용하세요.
 
-**安装gcc-9**
+**gcc-9설치**
 ```bash
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo update-alternatives --remove-all gcc
@@ -100,12 +100,12 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 1
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 10
 ```
 
-**판본 확인**
+**버전확인**
 ```bash
 g++ -v
 ```
 
-**편집 과정**
+**컴파일 프로그램**
 ```bash
 mkdir build
 cd build
@@ -118,7 +118,7 @@ make -j8
 docker build -t sad:v1 .
 ./docker/docker_run.sh
 ```
-进入docker容器后
+도커 컨테이너 진입 후
 ```bash
 cd ./thirdparty/g2o
 mkdir build
@@ -132,12 +132,12 @@ cmake ..
 make -j8
 ```
 
-## 常见问题
+## 일반적인 문제
 1. 그래픽 인터페이스는 2023년 이후 노트북의 특정 모델에서 데스크톱 지연을 유발합니다(GL 하드웨어 호환성).：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/67 
 2. 5장 테스트_nn이 gtest에서 gmock 오류와 함께 컴파일됩니다.：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/18
 3. 컴파일러 버전 문제：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/4 
 
-## TODO项
+## TODO 항목
 
 - 일부 일러스트레이션은 라이선스가 필요합니다.
 - 데이터 집합 대조（몇 가지 추가seq）
@@ -146,6 +146,6 @@ make -j8
 
 ## NOTES
 
-- [확정] ULHK의 IMU는 다른 것과는 다르게 중력이 작용한 것 같습니다.
-- [확정] NCLT의 IMU가 라이다 시스템으로 변환되었기 때문에 라이다와 IMU 사이의 회전에 대한 외부 참조가 없으며(원래 라이다는 90도 회전), 이제 라이다는 X 좌측 Y 후방 Z 아래, 원본은 X 전면 Y 오른쪽 Z 아래입니다. 이 책에서 사용된 NCLT 데이터는 포인트 클라우드 시스템을 기반으로 합니다.  IMU의 레버 암은 무시됩니다.
-- [확정] NCLT의 rtk 수정은 미터 범위의 평균 오류로 매우 안정적이지 않습니다.
+- [확인] ULHK의 IMU는 다른 것과는 다르게 중력이 작용한 것 같습니다.
+- [확인] NCLT의 IMU가 라이다 시스템으로 변환되었기 때문에 라이다와 IMU 사이의 회전에 대한 외부 참조가 없으며(원래 라이다는 90도 회전), 이제 라이다는 X 좌측 Y 후방 Z 아래, 원본은 X 전면 Y 오른쪽 Z 아래입니다. 이 책에서 사용된 NCLT 데이터는 포인트 클라우드 시스템을 기반으로 합니다.  IMU의 레버 암은 무시됩니다.
+- [확인] NCLT의 rtk 수정은 미터 범위의 평균 오류로 매우 안정적이지 않습니다.
