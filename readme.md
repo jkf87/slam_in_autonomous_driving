@@ -47,46 +47,44 @@
 
 ## 数据集
 
-- 数据集下载链接：
-- 百度云链接: https://pan.baidu.com/s/1ELOcF1UTKdfiKBAaXnE8sQ?pwd=feky 提取码: feky
-- OneDrive链接：https://1drv.ms/u/s!AgNFVSzSYXMahcEZejoUwCaHRcactQ?e=YsOYy2 
+- 데이터 세트 다운로드 링크：
+- 바이두 클라우드 링크: https://pan.baidu.com/s/1ELOcF1UTKdfiKBAaXnE8sQ?pwd=feky 출금 코드: feky
+- OneDrive 링크：https://1drv.ms/u/s!AgNFVSzSYXMahcEZejoUwCaHRcactQ?e=YsOYy2 
 
-- 包含以下数据集。总量较大(270GB)，请视自己硬盘容量下载。
-    - UrbanLoco (ULHK，3D激光，道路场景)
-    - NCLT (3D激光，RTK，校园场景)
-    - WXB (3D激光，园区场景)
-    - 2dmapping (2D激光，商场场景)
-    - AVIA (大疆固态激光)
-    - UTBM (3D激光，道路场景)
-- 其他的内置数据
-    - 第3,4章使用文本格式的IMU，RTK数据
-    - 第7章使用了一部分EPFL的数据作为配准点云来源
-- 您应该将上述数据下载至./dataset/sad/目录下，这样许多默认参数可以正常工作。如果不那么做，您也可以手动指定这些文件路径。如果您硬盘容量不足，可以将其他硬盘的目录软链至此处。
+- 다음 데이터 세트가 포함되어 있습니다. 총 용량이 270GB로 크므로 하드 드라이브 용량에 따라 다운로드하시기 바랍니다.
+    - UrbanLoco(ULHK, 3D 레이저, 도로 장면)
+    - NCLT(3D 레이저, RTK, 캠퍼스 장면)
+    - WXB(3D 레이저, 공원 장면)
+    - 2D 매핑(2D 레이저, 쇼핑몰 장면)
+    - AVIA(DJI 솔리드 스테이트 레이저)
+    - UTBM(3D 레이저, 도로 장면)- 기타 기본 제공 데이터
+    - 3,4장 텍스트 형식의 IMU, RTK 데이터 사용
+    - 7장에서는 EPFL 데이터의 일부를 정렬 포인트 클라우드 소스로 사용합니다.
+    -  위의 데이터를 . /데이터셋/sad/ 디렉터리에 다운로드해야 많은 기본 매개변수가 제대로 작동합니다. 그렇지 않은 경우 이러한 파일 경로를 수동으로 지정할 수도 있습니다. 하드 드라이브의 용량이 부족한 경우 여기에서 다른 하드 드라이브의 디렉터리를 소프트 링크할 수 있습니다.
 
-## 编译
-
-- 本书推荐的编译环境是Ubuntu 20.04。更老的Ubuntu版本需要适配gcc编译器，主要是C++17标准。更新的Ubuntu则需要您自己安装对应的ROS版本。
-- 在编译本书代码之前，请先安装以下库（如果您机器上没有安装的话）
+##컴파일
+- 이 책에서 권장하는 빌드 환경은 Ubuntu 20.04입니다. 이전 버전의 Ubuntu는 주로 C++17 표준인 gcc 컴파일러에 맞게 조정해야 합니다. 최신 우분투를 사용하려면 해당 ROS 버전을 직접 설치해야 합니다.
+- 이 책의 코드를 컴파일하기 전에 다음 라이브러리를 설치하세요(머신에 설치되어 있지 않은 경우).
     - ROS Noetic: http://wiki.ros.org/noetic/Installation/Ubuntu
-    - 使用以下指令安装其余的库
+    - 나머지 라이브러리를 설치하려면 다음 명령을 사용합니다.
     ```bash
     sudo apt install -y ros-noetic-pcl-ros ros-noetic-velodyne-msgs libopencv-dev libgoogle-glog-dev libeigen3-dev libsuitesparse-dev libpcl-dev libyaml-cpp-dev libbtbb-dev libgmock-dev
     ```
-    - Pangolin: 编译安装thirdparty/pangolin.zip，或者 https://github.com/stevenlovegrove/Pangolin
-    - 编译thirdparty/g2o，或者自行编译安装 https://github.com/RainerKuemmerle/g2o 
+    - 판골린: thirdparty/pangolin.zip 또는 https://github.com/stevenlovegrove/Pangolin 을 컴파일하여 설치합니다.
+    - 타사/G2O 컴파일 또는 직접 컴파일 및 설치 https://github.com/RainerKuemmerle/g2o 
     - 通过cmake, make安装本repo下的`thirdparty/g2o`库
-- 之后，使用通常的cmake, make方式就可以编译本书所有内容了。例如
+- 그런 다음 일반적인 cmake, make 메서드를 사용하여 책의 모든 내용을 컴파일할 수 있습니다. 예를 들면
 ```bash
 mkdir build
 cd build
 cmake ..
 make -j8
 ```
-- 编译后各章的可执行文件位于`bin`目录下
+- 컴파일된 챕터의 실행 파일은 `bin` 디렉터리에 있습니다.
 
 ### 适配Ubuntu18.04
 
-为了在Ubuntu18.04上编译运行，需要安装gcc-9，并且使用对应版本的TBB。或者在docker环境下使用。
+우분투 18.04에서 컴파일하고 실행하려면 gcc-9을 설치하고 해당 버전의 TBB를 사용해야 합니다. 또는 도커 환경에서 사용하세요.
 
 **安装gcc-9**
 ```bash
@@ -94,7 +92,7 @@ sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo update-alternatives --remove-all gcc
 sudo update-alternatives --remove-all g++
 
-#命令最后的1和10是优先级，如果使用auto选择模式，系统将默认使用优先级高的
+#명령 끝에 있는 1과 10은 우선순위 수준입니다. 자동 선택 모드를 사용하는 경우 시스템은 기본적으로 더 높은 우선순위를 사용합니다.
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 10
 
@@ -102,12 +100,12 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 1
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 10
 ```
 
-**检查版本**
+**판본 확인**
 ```bash
 g++ -v
 ```
 
-**编译程序**
+**편집 과정**
 ```bash
 mkdir build
 cd build
@@ -115,7 +113,7 @@ cmake .. -DBUILD_WITH_UBUNTU1804=ON
 make -j8
 ```
 
-**在docker环境下使用**
+**도커 환경에서 사용**
 ```bash
 docker build -t sad:v1 .
 ./docker/docker_run.sh
@@ -135,20 +133,19 @@ make -j8
 ```
 
 ## 常见问题
-1. 图形界面在2023年以后特定型号的笔记本端导致桌面卡死（GL硬件兼容性）：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/67 
-2. 第5章test_nn编译时，gtest报gmock错误：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/18
-3. 编译器版本问题：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/4 
+1. 그래픽 인터페이스는 2023년 이후 노트북의 특정 모델에서 데스크톱 지연을 유발합니다(GL 하드웨어 호환성).：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/67 
+2. 5장 테스트_nn이 gtest에서 gmock 오류와 함께 컴파일됩니다.：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/18
+3. 컴파일러 버전 문제：https://github.com/gaoxiang12/slam_in_autonomous_driving/issues/4 
 
 ## TODO项
 
-- 一部分插图需要授权
-- 整理数据集（增加几个seq）
-- 第9章前端第0个关键帧貌似有问题
-- LioPreiteg在某些数据集上不收敛
+- 일부 일러스트레이션은 라이선스가 필요합니다.
+- 데이터 집합 대조（몇 가지 추가seq）
+- 9장 앞부분의 0번째 키프레임에 문제가 있는 것 같습니다.
+- LioPreiteg일부 데이터 집합에서 수렴되지 않음
 
 ## NOTES
 
-- [已确认] ULHK的IMU似乎和别家的不一样，已经去了gravity
-- [已确认] NCLT的IMU在转包的时候转成了Lidar系，于是Lidar与IMU之间没有旋转的外参（本来Lidar是转了90度的），现在Lidar是X左Y后Z下，原车是X前Y右Z下。本书使用的NCLT数据均基于点云系,
-  IMU的杆臂被忽略。
-- [已确认] NCLT的rtk fix并不是非常稳定，平均误差在米级
+- [확정] ULHK의 IMU는 다른 것과는 다르게 중력이 작용한 것 같습니다.
+- [확정] NCLT의 IMU가 라이다 시스템으로 변환되었기 때문에 라이다와 IMU 사이의 회전에 대한 외부 참조가 없으며(원래 라이다는 90도 회전), 이제 라이다는 X 좌측 Y 후방 Z 아래, 원본은 X 전면 Y 오른쪽 Z 아래입니다. 이 책에서 사용된 NCLT 데이터는 포인트 클라우드 시스템을 기반으로 합니다.  IMU의 레버 암은 무시됩니다.
+- [확정] NCLT의 rtk 수정은 미터 범위의 평균 오류로 매우 안정적이지 않습니다.
